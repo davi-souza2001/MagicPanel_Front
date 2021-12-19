@@ -8,8 +8,8 @@
 }
 
 .contentBox{
-    height: 40vh;
-    width: 20vw;
+    min-height: 290px;
+    width: 340px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,8 +19,8 @@
 }
 
 .contentBox form{
-    height: 30vh;
-    width: 20vw;
+    height: 198.9px;
+    width: 273.2px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,4 +55,5 @@
 
 .contentBox p {
     color: #000;
+    cursor: pointer;
 }
