@@ -1,0 +1,36 @@
+.contentGeral{
+    height: 10vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+}
+
+.contentLogo{
+    margin-left: 20px;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #2a2136;
+}
+
+.contentOption{
+    height: 10vh;
+    width: 35vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.option{
+    background-color: #2a2136;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.option:hover{
+    transition: 0.2s;
+    background-color: #191125;
+}
+

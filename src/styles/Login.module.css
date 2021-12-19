@@ -1,0 +1,58 @@
+.contentGeral{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+}
+
+.contentBox{
+    height: 40vh;
+    width: 20vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.contentBox form{
+    height: 30vh;
+    width: 20vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.contentBox form input {
+    width: 15vw;
+    height: 5vh;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    margin: 10px 0;
+}
+
+.contentBox form input[type="text"]{
+    background: rgb(214, 214, 214);
+}
+
+.contentBox form input[type="submit"]{
+    background: #ac9fbe;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.contentBox form input[type="submit"]:hover{
+    transition: 0.2s;
+    background: #9085a0;
+    color: rgb(0, 0, 0);
+}
+
+.contentBox p {
+    color: #000;
+}
