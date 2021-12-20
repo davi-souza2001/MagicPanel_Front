@@ -4,41 +4,41 @@ import { createContext, useState } from "react";
 import route from "next/router";
 
 interface AuthContextProps {
-    register?: (user: UserRegister) => Promise<void> | undefined;
+    register: (user: User) => Promise<void>;
 }
 
-interface UserRegister {
-    name: String
+interface User {
+    name?: String
     email: String
     password: String
-    confirmPassword: String
+    confirmpassword?: String
 }
 
 const AuthContext = createContext<AuthContextProps>({});
 
-export function AuthProvider(props: any){
+export function AuthProvider(props: any) {
     const [authenticated, setAuthenticated] = useState(false)
 
     async function authUser(data: any) {
         setAuthenticated(true)
         localStorage.setItem('token', JSON.stringify(data.token))
-    
-        route.push('/')
-      }
 
-    async function register(user: UserRegister){
+        route.push('/')
+    }
+
+    async function register(user: User) {
         try {
             const data = await client.post('/users/register', user).then((res) => {
                 return res.data
             })
             await authUser(data)
-        } catch (err){
-            console.log("Errou"+err)
+        } catch (err) {
+            console.log("Errou" + err)
         }
     }
 
-    return(
-        <AuthContext.Provider value={{register}}>
+    return (
+        <AuthContext.Provider value={{ register }}>
             {props.children}
         </AuthContext.Provider>
     )
