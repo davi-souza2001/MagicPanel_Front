@@ -25,7 +25,6 @@ export default function Login(){
     function handleSubmit(e: any){
         e.preventDefault()
         if(registerLook){
-            console.log(user)
             register(user)
         }else{
             console.log('não tem')
