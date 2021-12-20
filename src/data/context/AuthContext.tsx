@@ -39,8 +39,16 @@ export function AuthProvider(props: any) {
         }
     }
 
-    async function login(user: User){
-        console.log(login)
+    async function login(user: User) {
+        try {
+            const data = await client.post('/users/login', user).then((response) => {
+                return response.data
+            })
+            await authUserSet(data)
+        } catch (err) {
+            console.log("Errou" + err)
+        }
+
     }
 
     return (

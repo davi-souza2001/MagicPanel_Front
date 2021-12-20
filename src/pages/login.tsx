@@ -18,7 +18,7 @@ export default function Login(){
     const [password, setPassword] = useState('')
     const [confirmpassword, setConfirmPassword] = useState('')
 
-    const { register } = useAuth()
+    const { register, login } = useAuth()
 
     const user: User = {name, email, password, confirmpassword}
 
@@ -27,7 +27,7 @@ export default function Login(){
         if(registerLook){
             register(user)
         }else{
-            console.log('não tem')
+            login(user)
         }
     }
 
