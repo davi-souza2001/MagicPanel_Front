@@ -3,7 +3,7 @@ import route from "next/router";
 import styles from '../styles/Bar.module.css'
 
 interface Bar {
-
+    name?: String
 }
 
 export default function Bar(props: Bar) {
@@ -23,7 +23,7 @@ export default function Bar(props: Bar) {
                 <div className={styles.option}onClick={() => route.push('/favorites')}>
                     <p>Favorites</p>
                 </div>
-                <p className={styles.option}>Bem vindo Davi</p>
+                <p className={styles.option}>Bem vindo {props.name ? props.name : 'não logado'}</p>
             </div>
         </div>
     )

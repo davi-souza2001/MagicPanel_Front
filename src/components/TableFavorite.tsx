@@ -27,7 +27,6 @@ export default function TableFavorite(props: TableFavorite) {
         }).catch((err) => console.log(err))
     }, [])
 
-    console.log(notes)
     return (
         <>
             {notes && notes.map((data: any, key: any) => {

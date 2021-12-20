@@ -16,7 +16,7 @@ import styles from '../styles/TableGeral.module.css'
 
 
 interface TableGeral {
-
+    
 }
 
 export default function TableGeral(props: TableGeral) {
