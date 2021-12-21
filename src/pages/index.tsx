@@ -18,30 +18,30 @@ interface UserProps {
 
 
 export default function Table() {
-    const [token, setToken] = useState('')
-    const [user, setUser] = useState<UserProps>({})
-    const { authenticated } = useAuth()
+    // const [token, setToken] = useState('')
+    // const [user, setUser] = useState<UserProps>({})
+    // const { authenticated } = useAuth()
 
-    useEffect(() => {
-        if (authenticated) {
-            // @ts-ignore
-            setToken(localStorage.getItem('token') )
-        }
-    }, [authenticated])
+    // useEffect(() => {
+    //     if (authenticated) {
+    //         // @ts-ignore
+    //         setToken(localStorage.getItem('token') )
+    //     }
+    // }, [authenticated])
 
-    useEffect(() => {
-        if(authenticated){
-            client.get('/users/checkUser', {
-                headers: {
-                    Authorization: `Bearer ${JSON.parse(token)}`
-                }
-            }).then((res) => {setUser(res.data)})
-        }
-    }, [token])
+    // useEffect(() => {
+    //     if(authenticated){
+    //         client.get('/users/checkUser', {
+    //             headers: {
+    //                 Authorization: `Bearer ${JSON.parse(token)}`
+    //             }
+    //         }).then((res) => {setUser(res.data)})
+    //     }
+    // }, [token])
 
     return (
         <>
-            <Bar name={user?.name} />
+            <Bar  />
             <div className={styles.contentTableGeral}>
                 <TableGeral />
             </div>
