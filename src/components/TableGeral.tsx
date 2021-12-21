@@ -13,13 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import styles from '../styles/TableGeral.module.css'
 
-
-
-interface TableGeral {
-    
-}
-
-export default function TableGeral(props: TableGeral) {
+export default function TableGeral() {
     const [notes, setNotes] = useState([])
 
     useEffect(() => {
