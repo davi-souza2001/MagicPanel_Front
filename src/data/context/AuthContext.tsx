@@ -1,11 +1,12 @@
 import client from '../../service/client'
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import route from "next/router";
 
 interface AuthContextProps {
     register: (user: User) => Promise<void>;
-    login: (user: User) => Promise<void>
+    login: (user: User) => Promise<void>;
+    authenticated?: Boolean;
 }
 
 interface User {
@@ -20,6 +21,16 @@ const AuthContext = createContext<AuthContextProps>({});
 
 export function AuthProvider(props: any) {
     const [authenticated, setAuthenticated] = useState(false)
+
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+
+        if (token) {
+            // @ts-ignore
+            client.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`
+            setAuthenticated(true)
+        }
+    }, [])
 
     async function authUserSet(data: any) {
         setAuthenticated(true)
@@ -52,7 +63,7 @@ export function AuthProvider(props: any) {
     }
 
     return (
-        <AuthContext.Provider value={{ register, login }}>
+        <AuthContext.Provider value={{ register, login, authenticated}}>
             {props.children}
         </AuthContext.Provider>
     )

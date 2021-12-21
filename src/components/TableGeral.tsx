@@ -28,7 +28,6 @@ export default function TableGeral(props: TableGeral) {
         }).catch((err) => console.log(err))
     }, [])
 
-    console.log(notes)
     return (
         <>
             {notes && notes.map((data: any, key: any) => {

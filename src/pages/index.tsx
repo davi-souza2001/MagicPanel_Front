@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import client from '../service/client'
+import useAuth from '../data/hook/useAuth'
 
 import Bar from '../components/Bar'
 import TableGeral from '../components/TableGeral'
 
 import styles from '../styles/Table.module.css'
 
-interface UserProps{
+interface UserProps {
     createdAt?: String,
     email?: String,
     name?: String,
@@ -17,21 +18,32 @@ interface UserProps{
 
 
 export default function Table() {
-    const [token] = useState(localStorage.getItem('token') || '')
+    const [token, setToken] = useState('')
     const [user, setUser] = useState<UserProps>({})
+    const { authenticated } = useAuth()
+    console.log(authenticated)
 
     useEffect(() => {
-        client.get('/users/checkUser', {
-            headers: {
-                Authorization: `Bearer ${JSON.parse(token)}`
-            }
-        }).then((res) => {setUser(res.data)})
+        if (authenticated) {
+            // @ts-ignore
+            setToken(localStorage.getItem('token') )
+        }
+    }, [authenticated])
+
+    useEffect(() => {
+        if(authenticated){
+            client.get('/users/checkUser', {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            }).then((res) => {setUser(res.data)})
+        }
     }, [token])
 
     console.log(user)
     return (
         <>
-            <Bar name={user?.name}/>
+            <Bar name={user?.name} />
             <div className={styles.contentTableGeral}>
                 <TableGeral />
             </div>
