@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import client from '../service/client'
+import useAuth from '../data/hook/useAuth';
 
 
 import { withStyles } from '@material-ui/core/styles';
@@ -20,12 +21,24 @@ interface TableFavorite {
 
 export default function TableFavorite(props: TableFavorite) {
     const [notes, setNotes] = useState([])
+    const { user } = useAuth()
+
 
     useEffect(() => {
         client.get('/notes/getAllNotes').then((notes: any) => {
             setNotes(notes.data)
         }).catch((err) => console.log(err))
     }, [])
+
+    async function removeNote(id: String){
+        if(user?.email != ''){
+            client.delete(`/notes/delete/${id}`).then((res) => {
+                console.log('Apagado'+ res.data)
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+    }
 
     return (
         <>
@@ -47,7 +60,7 @@ export default function TableFavorite(props: TableFavorite) {
                                 <Button size="small" color="primary">
                                     More
                                 </Button>
-                                <Button size="small" color="secondary">
+                                <Button size="small" color="secondary" onClick={() => removeNote(data._id)}>
                                     Delete
                                 </Button>
                             </CardActions>

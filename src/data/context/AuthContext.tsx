@@ -81,8 +81,6 @@ export function AuthProvider(props: any) {
         route.push('/login')
     }
 
-    
-
     return (
         <AuthContext.Provider value={{ register, login, authenticated, logout, user}}>
             {props.children}

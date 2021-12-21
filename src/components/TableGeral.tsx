@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import route from "next/router";
 import client from '../service/client'
 
 
@@ -12,9 +13,11 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import styles from '../styles/TableGeral.module.css'
+import useAuth from '../data/hook/useAuth';
 
 export default function TableGeral() {
     const [notes, setNotes] = useState([])
+    const { user } = useAuth()
 
     useEffect(() => {
         client.get('/notes/getAllNotes').then((notes: any) => {
@@ -22,6 +25,17 @@ export default function TableGeral() {
         }).catch((err) => console.log(err))
     }, [])
 
+    
+    async function removeNote(id: String){
+        if(user?.email != ''){
+            client.delete(`/notes/delete/${id}`).then((res) => {
+                console.log('Apagado'+ res.data)
+            }).catch((err) => {
+                console.log(err)
+            })
+            window.location.reload()  
+        }
+    }
     return (
         <>
             {notes && notes.map((data: any, key: any) => {
@@ -42,7 +56,7 @@ export default function TableGeral() {
                                 <Button size="small" color="primary">
                                     More
                                 </Button>
-                                <Button size="small" color="secondary">
+                                <Button size="small" color="secondary" onClick={() => removeNote(data._id)}>
                                     Delete
                                 </Button>
                             </CardActions>
