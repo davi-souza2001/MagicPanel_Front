@@ -6,6 +6,7 @@ import route from "next/router";
 interface AuthContextProps {
     register: (user: User) => Promise<void>;
     login: (user: User) => Promise<void>;
+    logout: (user: User) => Promise<void>;
     authenticated?: Boolean;
 }
 
@@ -62,8 +63,16 @@ export function AuthProvider(props: any) {
 
     }
 
+    async function logout() {
+        setAuthenticated(false)
+        localStorage.removeItem('token')
+            // @ts-ignore
+        client.defaults.headers.Authorization = undefined
+        route.push('/login')
+    }
+
     return (
-        <AuthContext.Provider value={{ register, login, authenticated}}>
+        <AuthContext.Provider value={{ register, login, authenticated, logout}}>
             {props.children}
         </AuthContext.Provider>
     )

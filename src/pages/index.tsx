@@ -21,7 +21,6 @@ export default function Table() {
     const [token, setToken] = useState('')
     const [user, setUser] = useState<UserProps>({})
     const { authenticated } = useAuth()
-    console.log(authenticated)
 
     useEffect(() => {
         if (authenticated) {
@@ -40,7 +39,6 @@ export default function Table() {
         }
     }, [token])
 
-    console.log(user)
     return (
         <>
             <Bar name={user?.name} />

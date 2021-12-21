@@ -1,4 +1,5 @@
 import route from "next/router";
+import useAuth from "../data/hook/useAuth";
 
 import styles from '../styles/Bar.module.css'
 
@@ -7,6 +8,7 @@ interface Bar {
 }
 
 export default function Bar(props: Bar) {
+    const { logout } = useAuth()
     
     return (
         <div className={styles.contentGeral}>
@@ -23,7 +25,10 @@ export default function Bar(props: Bar) {
                 <div className={styles.option}onClick={() => route.push('/favorites')}>
                     <p>Favorites</p>
                 </div>
-                <p className={styles.option}>Bem vindo {props.name ? props.name : 'não logado'}</p>
+                     {/* @ts-ignore */}
+                <div className={styles.option} onClick={logout}>
+                    <p>Bem vindo {props.name ? props.name : 'não logado'}</p>
+                </div>
             </div>
         </div>
     )
