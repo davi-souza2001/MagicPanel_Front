@@ -3,12 +3,14 @@ import useAuth from "../data/hook/useAuth";
 
 import styles from '../styles/Bar.module.css'
 
-interface Bar {
-    name?: String
-}
 
-export default function Bar(props: Bar) {
-    const { logout } = useAuth()
+
+export default function Bar() {
+    const { logout, user } = useAuth()
+
+    if(user){
+        console.log(user)
+    }
     
     return (
         <div className={styles.contentGeral}>
@@ -27,7 +29,7 @@ export default function Bar(props: Bar) {
                 </div>
                      {/* @ts-ignore */}
                 <div className={styles.option} onClick={logout}>
-                    <p>Bem vindo {props.name ? props.name : 'não logado'}</p>
+                    <p>Bem vindo {user ? user?.name : 'não logado'}</p>
                 </div>
             </div>
         </div>

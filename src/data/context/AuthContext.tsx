@@ -7,6 +7,7 @@ interface AuthContextProps {
     register: (user: User) => Promise<void>;
     login: (user: User) => Promise<void>;
     logout: (user: User) => Promise<void>;
+    user: any;
     authenticated?: Boolean;
 }
 
@@ -22,7 +23,9 @@ const AuthContext = createContext<AuthContextProps>({});
 
 export function AuthProvider(props: any) {
     const [authenticated, setAuthenticated] = useState(false)
+    const [user, setUser] = useState({})
 
+    //function get token in localstorage and search for user with same token
     useEffect(() => {
         const token = localStorage.getItem('token')
 
@@ -30,6 +33,14 @@ export function AuthProvider(props: any) {
             // @ts-ignore
             client.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`
             setAuthenticated(true)
+
+            client.get('/users/checkUser', {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(token)}`
+                }
+            }).then((res) => {
+                setUser(res.data)
+            })    
         }
     }, [])
 
@@ -60,7 +71,6 @@ export function AuthProvider(props: any) {
         } catch (err) {
             console.log("Errou" + err)
         }
-
     }
 
     async function logout() {
@@ -71,8 +81,10 @@ export function AuthProvider(props: any) {
         route.push('/login')
     }
 
+    
+
     return (
-        <AuthContext.Provider value={{ register, login, authenticated, logout}}>
+        <AuthContext.Provider value={{ register, login, authenticated, logout, user}}>
             {props.children}
         </AuthContext.Provider>
     )
