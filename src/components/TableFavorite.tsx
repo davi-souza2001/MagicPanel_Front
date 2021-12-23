@@ -37,37 +37,42 @@ export default function TableFavorite(props: TableFavorite) {
             }).catch((err) => {
                 console.log(err)
             })
+            window.location.reload()
         }
+    }
+
+    function renderNotes() {
+        return notes?.map((data: any, key: any) => {
+            if (data.email == user?.email && data.favorite != false) {
+                return (
+                    <Card className={styles.tableGeral} raised key={key}>
+                        <CardActionArea>
+                            <CardContent>
+                                <Typography gutterBottom variant="h4" component="h2">
+                                    {data.title}
+                                </Typography>
+                                <Typography component="p">
+                                    {data.note}
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                        <CardActions>
+                            <Button size="small" color="primary">
+                                More
+                            </Button>
+                            <Button size="small" color="secondary" onClick={() => removeNote(data._id)}>
+                                Delete
+                            </Button>
+                        </CardActions>
+                    </Card>
+                )
+            }
+        })
     }
 
     return (
         <>
-            {notes && notes.map((data: any, key: any) => {
-                if(data.favorite === true){
-                    return (
-                        <Card className={styles.tableGeral} raised key={key}>
-                            <CardActionArea>
-                                <CardContent>
-                                    <Typography gutterBottom variant="h4" component="h2">
-                                        {data.title}
-                                    </Typography>
-                                    <Typography component="p">
-                                        {data.note}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                            <CardActions>
-                                <Button size="small" color="primary">
-                                    More
-                                </Button>
-                                <Button size="small" color="secondary" onClick={() => removeNote(data._id)}>
-                                    Delete
-                                </Button>
-                            </CardActions>
-                        </Card>
-                    )
-                }
-            })}
+            {renderNotes()}
         </>
     )
 }
