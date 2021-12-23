@@ -26,6 +26,7 @@ export function AuthProvider(props: any) {
     const [user, setUser] = useState({})
 
     //function get token in localstorage and search for user with same token
+    //this token will be used throughout the application.
     useEffect(() => {
         const token = localStorage.getItem('token')
 
@@ -43,6 +44,7 @@ export function AuthProvider(props: any) {
             })    
         }
     }, [])
+
 
     async function authUserSet(data: any) {
         setAuthenticated(true)
