@@ -56,7 +56,6 @@ export function AuthProvider(props: any) {
             const data = await client.post('/users/register', user).then((res) => {
                 return res.data
             })
-            await authUserSet(data)
         } catch (err) {
             console.log("Errou" + err)
         }
