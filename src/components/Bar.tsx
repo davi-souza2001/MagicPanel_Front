@@ -19,7 +19,6 @@ interface Note{
     favorite: Boolean
 }
 
-
 export default function Bar() {
     const { logout, user } = useAuth()
     const [open, setOpen] = useState({ open: false })
@@ -115,7 +114,7 @@ export default function Bar() {
                             setNoteData()
                             setOpen({ open: false })
                         }} color="primary">
-                            Subscribe
+                            Submit
                         </Button>
                     </DialogActions>
                 </Dialog>
