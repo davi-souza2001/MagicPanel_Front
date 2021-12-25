@@ -1,11 +1,7 @@
 import Bar from "../components/Bar";
 import TableFavorite from "../components/TableFavorite";
 
-interface Favorites {
-
-}
-
-export default function Favorites(props: Favorites) {
+export default function Favorites() {
     return (
         <>
             <Bar />

@@ -10,7 +10,6 @@ interface User {
     confirmpassword: String
 }
 
-
 export default function Login(){
     const [registerLook, setRegisterLook] = useState(false)
     const [name, setName] = useState('')
