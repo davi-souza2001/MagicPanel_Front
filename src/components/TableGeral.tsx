@@ -47,8 +47,8 @@ export default function TableGeral() {
         if (token) {
             client.patch(`/notes/edit/${id}`, noteAll).then((note: any) => {
                 console.log(note.data)
+                window.location.reload()
             }).catch((err) => {console.log(err)})
-            window.location.reload()
         }
     }
 
@@ -56,16 +56,16 @@ export default function TableGeral() {
         if (user?.email != '') {
             client.delete(`/notes/delete/${id}`).then((res) => {
                 console.log('Apagado' + res.data)
+                window.location.reload()
             }).catch((err) => {
                 console.log(err)
             })
-            window.location.reload()
         }
     }
 
     function renderNotes() {
         return notes?.map((data: any, key: any) => {
-            if (data.email == user?.email && data.favorite != true) {
+            if (data.email == user?.email && data.favorite == false) {
                 return (
                     <Card className={styles.tableGeral} raised key={key}>
                         <CardActionArea>

@@ -34,12 +34,12 @@ export default function Bar() {
                 '/notes/postNewNote', note
             ).then((res) => {
                 console.log(res.data)
+                window.location.reload()
                 return res.data
             }).catch((err) => {
                 console.log(err)
                 return err.response.data
             })
-            window.location.reload()
         }
     }
 

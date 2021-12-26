@@ -18,15 +18,21 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import styles from '../styles/TableGeral.module.css'
 
-
-interface TableFavorite {
-
+interface Note{
+    note: String,
+    title: String,
+    favorite: Boolean
 }
 
-export default function TableFavorite(props: TableFavorite) {
+
+export default function TableGeral() {
     const [notes, setNotes] = useState([])
     const { user } = useAuth()
+    const [open, setOpen] = useState({ open: false })
 
+    const [note, setNote] = useState('')
+    const [title, setTitle] = useState('')
+    const [favorite, setFavorite] = useState(false)
 
     useEffect(() => {
         client.get('/notes/getAllNotes').then((notes: any) => {
@@ -34,23 +40,35 @@ export default function TableFavorite(props: TableFavorite) {
         }).catch((err) => console.log(err))
     }, [])
 
-    async function removeNote(id: String){
-        if(user?.email != ''){
+    async function editNote(id: String) {
+        const noteAll: Note = {note, title, favorite}
+        const token = localStorage.getItem('token')
+
+        if (token) {
+            client.patch(`/notes/edit/${id}`, noteAll).then((note: any) => {
+                console.log(note.data)
+                window.location.reload()
+            }).catch((err) => {console.log(err)})
+        }
+    }
+
+    async function removeNote(id: String) {
+        if (user?.email != '') {
             client.delete(`/notes/delete/${id}`).then((res) => {
-                console.log('Apagado'+ res.data)
+                console.log('Apagado' + res.data)
+                window.location.reload()
             }).catch((err) => {
                 console.log(err)
             })
-            window.location.reload()
         }
     }
 
     function renderNotes() {
         return notes?.map((data: any, key: any) => {
-            if (data.email == user?.email && data.favorite != false) {
+            if (data.email == user?.email && data.favorite == true) {
                 return (
                     <Card className={styles.tableGeral} raised key={key}>
-                        <CardActionArea>
+                        <CardActionArea >
                             <CardContent>
                                 <Typography gutterBottom variant="h4" component="h2">
                                     {data.title}
@@ -61,19 +79,73 @@ export default function TableFavorite(props: TableFavorite) {
                             </CardContent>
                         </CardActionArea>
                         <CardActions>
-                            <Button size="small" color="primary">
-                                More
-                            </Button>
                             <Button size="small" color="secondary" onClick={() => removeNote(data._id)}>
                                 Delete
                             </Button>
+                            <Button size="small" color="primary" onClick={() => {
+                                setNote(data.note)
+                                setTitle(data.title)
+                                setOpen({ open: true })}
+                            }>
+                                Edit
+                            </Button>
                         </CardActions>
+
+                        <Dialog
+                            open={open.open}
+                            onClose={() => setOpen({ open: false })}
+                            aria-labelledby="form-dialog-title"
+                        >
+                            <DialogTitle id="form-dialog-title">Edit Your Note</DialogTitle>
+                            <DialogContent >
+                                <DialogContentText>
+                                    Make a note you need to remember.
+                                </DialogContentText>
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="note"
+                                    label="Your Title for note"
+                                    type="text"
+                                    fullWidth
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    id="note"
+                                    label="Your note"
+                                    type="text"
+                                    fullWidth
+                                    value={note}
+                                    onChange={(e) => setNote(e.target.value)}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    id="favorite"
+                                    label="Bookmark it?"
+                                    type="checkbox"
+                                    fullWidth
+                                    onChange={() => setFavorite(true)}
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setOpen({ open: false })} color="secondary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={() => {
+                                    editNote(data._id)
+                                    setOpen({ open: false })
+                                }} color="primary">
+                                    Edit
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </Card>
                 )
             }
         })
     }
-
     return (
         <>
             {renderNotes()}
