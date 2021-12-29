@@ -68,7 +68,9 @@ export default function Bar() {
                 </div>
                 {/* @ts-ignore */}
                 <div className={styles.option} onClick={logout}>
-                    <p>Bem vindo {user ? user?.name : 'não logado'}</p>
+                    {user?.email ? (
+                        <p>Bem vindo {user ? user?.name : 'não logado'}</p>
+                    ): <p>Sem autenticação</p>}
                 </div>
                 <Dialog
                     open={open.open}

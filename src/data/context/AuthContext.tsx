@@ -24,11 +24,12 @@ const AuthContext = createContext<AuthContextProps>({});
 export function AuthProvider(props: any) {
     const [authenticated, setAuthenticated] = useState(false)
     const [user, setUser] = useState({})
+    let token: any
 
     //function get token in localstorage and search for user with same token
     //this token will be used throughout the application.
     useEffect(() => {
-        const token = localStorage.getItem('token')
+        token = localStorage.getItem('token')
 
         if (token) {
             // @ts-ignore
@@ -41,14 +42,15 @@ export function AuthProvider(props: any) {
                 }
             }).then((res) => {
                 setUser(res.data)
+                setAuthenticated(true)
             })    
         }
-    }, [])
+    }, [token])
 
 
     async function authUserSet(data: any) {
-        setAuthenticated(true)
         localStorage.setItem('token', JSON.stringify(data.token))
+        setAuthenticated(true)
 
         route.push('/')
     }
