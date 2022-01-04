@@ -1,4 +1,5 @@
 import client from '../../service/client'
+import Cookies from 'js-cookie'
 
 import { createContext, useEffect, useState } from "react";
 import route from "next/router";
@@ -29,7 +30,8 @@ export function AuthProvider(props: any) {
     //function get token in localstorage and search for user with same token
     //this token will be used throughout the application.
     useEffect(() => {
-        token = localStorage.getItem('token')
+        // token = localStorage.getItem('token')
+        token = Cookies.get('tokenAuthMagicPanel')
 
         if (token) {
             // @ts-ignore
@@ -49,7 +51,8 @@ export function AuthProvider(props: any) {
 
 
     async function authUserSet(data: any) {
-        localStorage.setItem('token', JSON.stringify(data.token))
+        Cookies.set('tokenAuthMagicPanel', JSON.stringify(data.token))
+        // localStorage.setItem('token', JSON.stringify(data.token))
         setAuthenticated(true)
 
         route.push('/')
@@ -79,7 +82,8 @@ export function AuthProvider(props: any) {
 
     async function logout() {
         setAuthenticated(false)
-        localStorage.removeItem('token')
+        // localStorage.removeItem('token')
+        Cookies.remove('tokenAuthMagicPanel')
             // @ts-ignore
         client.defaults.headers.Authorization = undefined
         route.push('/login')

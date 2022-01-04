@@ -7,3 +7,6 @@ const api = axios.create({
 });
 
 export default api
+
+// https://magicpaneapi.herokuapp.com/
+// http://localhost:5000/
