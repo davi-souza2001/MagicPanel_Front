@@ -13,10 +13,12 @@ interface AuthContextProps {
 }
 
 interface User {
-    name?: String
-    email: String
-    password: String
-    confirmpassword?: String
+    name: String,
+    email: String,
+    createdAt?: String,
+    updatedAt?: String,
+    __v?: number,
+    _id?: ''
 }
 
 // @ts-ignore
@@ -24,7 +26,7 @@ const AuthContext = createContext<AuthContextProps>({});
 
 export function AuthProvider(props: any) {
     const [authenticated, setAuthenticated] = useState(false)
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState<User>({ name: '', email: '' })
     let token: any
 
     //function get token in localstorage and search for user with same token
@@ -45,7 +47,7 @@ export function AuthProvider(props: any) {
             }).then((res) => {
                 setUser(res.data)
                 setAuthenticated(true)
-            })    
+            })
         }
     }, [token])
 
@@ -84,13 +86,13 @@ export function AuthProvider(props: any) {
         setAuthenticated(false)
         // localStorage.removeItem('token')
         Cookies.remove('tokenAuthMagicPanel')
-            // @ts-ignore
+        // @ts-ignore
         client.defaults.headers.Authorization = undefined
         route.push('/login')
     }
 
     return (
-        <AuthContext.Provider value={{ register, login, authenticated, logout, user}}>
+        <AuthContext.Provider value={{ register, login, authenticated, logout, user }}>
             {props.children}
         </AuthContext.Provider>
     )

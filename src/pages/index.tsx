@@ -9,18 +9,13 @@ import styles from '../styles/Table.module.css'
 export default function Table() {
 
     const { user } = useAuth()
-    console.log(user)
 
     return (
         <>
-            {user?.email ? (
-                <>
-                    <Bar />
-                    <div className={styles.contentTableGeral}>
-                        <TableGeral />
-                    </div>
-                </>
-            ): <ForceAuthentication/>}
+            <Bar />
+            <div className={styles.contentTableGeral}>
+                <TableGeral />
+            </div>
         </>
     )
 }
